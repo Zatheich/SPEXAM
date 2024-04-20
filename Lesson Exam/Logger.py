@@ -4,6 +4,7 @@ import logging
 
 
 class Logger:
+    logging.basicConfig(filename='errors.log', level=logging.INFO,format='%(asctime)s - %(levelname)s - %(message)s')
     logging.basicConfig(filename='errors.log', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
     def __init__(self, loggerName: str, level: int = DEBUG, fileName: str = "loggingFile.log", ):
         self.Level = level

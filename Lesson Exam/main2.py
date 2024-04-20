@@ -3,9 +3,11 @@ from Logger import *
 
 
 parser = HtmlParser("https://bank.gov.ua/")
-parser2 = HtmlParser("https://sinoptik.ua/")
+panzer = HtmlParser("https://sinoptik.ua/%D0%BF%D0%BE%D0%B3%D0%BE%D0%B4%D0%B0-%D0%BA%D0%B8%D0%B5%D0%B2")
+#panther = HtmlParser("https://www.atbmarket.com/product/kartopla-1-gat")
 parser.NbuParse('div', 'index-page')
 parser.meteoParse( tag= 'div', attribute='index-page')
+#parser.KarParse( tag= 'div', attribute='index-page')
 
 
 
@@ -15,28 +17,32 @@ try:
     a = input("Cash or tempreture - ")
     if a == "Cash":
         b = input("Euro or Dollars - ")
-        if b == "Euro":
-            digit = float(input("Enter digit: "))
-            print(digit * parser.Result[2])
-        if b == "Dollars":
-            digit = float(input("Enter digit: "))
-            print(digit * parser.Result[3])
-        if b != "Euro":
-            logging.error(f"Помилка:")
+        logging.info(f"Користувач виконав дію: {a}")
+        try:
+            if b == "Euro":
+                logging.info(f"Користувач виконав дію: {b}")
+                digit = float(input("Enter digit: "))
+                print(digit * parser.Result[2])
+            if b == "Dollars":
+                logging.info(f"Користувач виконав дію: {b}")
+                digit = float(input("Enter digit: "))
+                print(digit * parser.Result[3])
+        except TypeError:
+            logging.error(f"Помилка: ")
             raise TypeError
-        if b != "Dollars":
-            logging.error(f"Помилка:")
-            raise TypeError
-    if a == "tempreture":
-        print(parser.Result)
-    if a != "tempreture":
+    try:
+        if a == "tempreture":
+            logging.info(f"Користувач виконав дію: {a}")
+            print(panzer.Result)
+    except TypeError:
         logging.error(f"Помилка: ")
         raise TypeError
 
 
 
 
-except TypeError as e:
-    print("Type Error")
-    logging.error(f"Помилка: {e}")
+
+
+except TypeError:
+    logging.error(f"Помилка: ")
     raise TypeError
