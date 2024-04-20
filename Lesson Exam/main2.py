@@ -3,11 +3,10 @@ from Logger import *
 
 
 parser = HtmlParser("https://bank.gov.ua/")
-panzer = HtmlParser("https://sinoptik.ua/%D0%BF%D0%BE%D0%B3%D0%BE%D0%B4%D0%B0-%D0%BA%D0%B8%D0%B5%D0%B2")
-#panther = HtmlParser("https://www.atbmarket.com/product/kartopla-1-gat")
+panzer = HtmlParser("https://meteo.ua/ua/34/kiev")
 parser.NbuParse('div', 'index-page')
-parser.meteoParse( tag= 'div', attribute='index-page')
-#parser.KarParse( tag= 'div', attribute='index-page')
+parser.meteoParse( tag= 'div', attribute='weather-detail__main-temp')
+
 
 
 
@@ -22,27 +21,26 @@ try:
             if b == "Euro":
                 logging.info(f"Користувач виконав дію: {b}")
                 digit = float(input("Enter digit: "))
-                print(digit * parser.Result[2])
+                d = digit * parser.Result[2]
+                print(d)
+                logging.info(f"результат дії: {d}")
             if b == "Dollars":
                 logging.info(f"Користувач виконав дію: {b}")
                 digit = float(input("Enter digit: "))
-                print(digit * parser.Result[3])
-        except TypeError:
-            logging.error(f"Помилка: ")
+                c = digit * parser.Result[3]
+                print(c)
+                logging.info(f"результат дії: {c}")
+        except TypeError as e:
+            print("Type Error")
+            logging.error(f"Помилка: {e}")
             raise TypeError
-    try:
-        if a == "tempreture":
-            logging.info(f"Користувач виконав дію: {a}")
-            print(panzer.Result)
-    except TypeError:
-        logging.error(f"Помилка: ")
-        raise TypeError
-
-
-
-
-
-
-except TypeError:
-    logging.error(f"Помилка: ")
-    raise TypeError
+    elif a == "tempreture":
+        logging.info(f"Користувач виконав дію: {a}")
+        print(panzer.Result)
+    else:
+        raise TypeError(f"Wrong data - {a}")
+except TypeError as te:
+    msg = f"Помилка: {te}"
+    print(msg)
+    logging.error(msg)
+print("End")
